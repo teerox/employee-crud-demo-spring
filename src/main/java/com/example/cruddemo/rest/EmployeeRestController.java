@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+// we using the spring data rest, so we don't need to use @ResponseBody
+// @RestController
 @RequestMapping("/api")
 public class EmployeeRestController {
 
     private EmployeeService employeeService;
 
-    @Autowired
+    //@Autowired
     public EmployeeRestController(EmployeeService theEmployeeService) {
         employeeService = theEmployeeService;
     }
