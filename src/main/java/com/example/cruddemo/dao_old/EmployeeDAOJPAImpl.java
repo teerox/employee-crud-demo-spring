@@ -1,4 +1,4 @@
-package com.example.cruddemo.dao;
+package com.example.cruddemo.dao_old;
 
 import com.example.cruddemo.entity.Employee;
 import jakarta.persistence.EntityManager;
