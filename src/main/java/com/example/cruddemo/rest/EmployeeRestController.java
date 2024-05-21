@@ -2,9 +2,15 @@ package com.example.cruddemo.rest;
 
 import com.example.cruddemo.entity.Employee;
 import com.example.cruddemo.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // we using the spring data rest, so we don't need to use @ResponseBody

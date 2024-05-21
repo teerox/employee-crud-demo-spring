@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Confirmation Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .confirmation-container {
+            margin-top: 50px;
+        }
+        .confirmation-header {
+            margin-bottom: 30px;
+        }
+        .confirmation-details {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container confirmation-container">
+    <h1 class="confirmation-header">Employee Confirmation</h1>
+    <div class="confirmation-details">
+        <p>The employee has been registered successfully with the following details:</p>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>First Name:</strong> <span th:text="${employee.firstName}"></span></li>
+            <li class="list-group-item"><strong>Last Name:</strong> <span th:text="${employee.lastName}"></span></li>
+            <li class="list-group-item"><strong>Email:</strong> <span th:text="${employee.email}"></span></li>
+        </ul>
+        <a href="/employees/list" class="btn btn-primary mt-3">Back to Employee List</a>
+    </div>
+</div>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

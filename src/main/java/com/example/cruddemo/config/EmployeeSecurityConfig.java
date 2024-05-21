@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.H2;
 
-@Configuration
+//@Configuration
 public class EmployeeSecurityConfig {
 //    @Bean
 //    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
