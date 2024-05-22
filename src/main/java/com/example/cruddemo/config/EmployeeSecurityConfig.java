@@ -6,6 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
@@ -21,8 +22,11 @@ import javax.sql.DataSource;
 
 import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.H2;
 
-//@Configuration
+@Configuration
 public class EmployeeSecurityConfig {
+
+
+    // this is to process in a memory user
 //    @Bean
 //    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
 //        UserDetails user = User.builder()
@@ -44,6 +48,7 @@ public class EmployeeSecurityConfig {
 //        return new InMemoryUserDetailsManager(user, manager, admin);
 //    }
 
+     //secure rest api
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -54,9 +59,26 @@ public class EmployeeSecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "api/employee").hasRole("MANAGER")
                                 .requestMatchers(HttpMethod.PUT, "api/employee").hasRole("MANAGER")
                                 .requestMatchers(HttpMethod.DELETE, "api/employee").hasRole("ADMIN")
-                );
+                                .requestMatchers("employees/").hasRole("EMPLOYEE")
+                                .requestMatchers("employees/leaders/**").hasRole("MANAGER")
+                                .requestMatchers("employees/systems/**").hasRole("ADMIN")
+                                .anyRequest()
+                                .authenticated()
+                )
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling
+                                .accessDeniedPage("/employees/access-denied")
+                )
+                .formLogin(form ->
+                        form.loginPage("/login")
+                                .loginProcessingUrl("/authenticateTheUser")
+                                .defaultSuccessUrl("/", true)
+                                .failureUrl("/login?error=true")
+                                .permitAll()
+                )
+                .logout(LogoutConfigurer::permitAll);
         // use basic authentication
-        http.httpBasic(Customizer.withDefaults());
+        //http.httpBasic(Customizer.withDefaults());
 
 
         // disable csrf
@@ -65,15 +87,14 @@ public class EmployeeSecurityConfig {
         return http.build();
     }
 
-
-    // add support for jbdc
+//   //add support for jbdc
 //    @Bean
 //    public UserDetailsManager userDetailsManager(DataSource dataSource) {
 //        return new JdbcUserDetailsManager(dataSource);
 //
 //    }
 
-    // for custom queries
+ //    for custom queries
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
@@ -81,6 +102,7 @@ public class EmployeeSecurityConfig {
                 "select user_id, pw, active from members where user_id = ?");
         userDetailsManager.setAuthoritiesByUsernameQuery(
                 "select user_id, role from roles where user_id = ?");
+        System.out.println("userDetailsManager: " + userDetailsManager.getUsersByUsernameQuery());
         return userDetailsManager;
     }
 

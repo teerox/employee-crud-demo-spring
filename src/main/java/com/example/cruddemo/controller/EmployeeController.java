@@ -23,6 +23,26 @@ public class EmployeeController {
         employeeService = theEmployeeService;
     }
 
+    @GetMapping("/home")
+    public String showHome() {
+        return "/home/home";
+    }
+
+    @GetMapping("/leaders")
+    public String showLeaders() {
+        return "/home/leaders";
+    }
+
+    @GetMapping("/systems")
+    public String showSystem() {
+        return "/home/systems";
+    }
+
+    @GetMapping("/access-denied")
+    public String showAccessDenied() {
+        return "/home/access-denied";
+    }
+
     @GetMapping("/list")
     public String showAllEmployee(Model model) {
         List<Employee> employees = employeeService.findAll();
