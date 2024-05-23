@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/employees")
+//@Controller
+//@RequestMapping("/employees")
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -21,6 +21,26 @@ public class EmployeeController {
     //@Autowired
     public EmployeeController(EmployeeService theEmployeeService) {
         employeeService = theEmployeeService;
+    }
+
+    @GetMapping("/home")
+    public String showHome() {
+        return "/home/home";
+    }
+
+    @GetMapping("/leaders")
+    public String showLeaders() {
+        return "/home/leaders";
+    }
+
+    @GetMapping("/systems")
+    public String showSystem() {
+        return "/home/systems";
+    }
+
+    @GetMapping("/access-denied")
+    public String showAccessDenied() {
+        return "/home/access-denied";
     }
 
     @GetMapping("/list")
