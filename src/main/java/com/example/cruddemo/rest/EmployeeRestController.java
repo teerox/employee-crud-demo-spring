@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 // we using the spring data rest, so we don't need to use @ResponseBody
-@RestController
-@RequestMapping("/api")
+//@RestController
+//@RequestMapping("/api")
 public class EmployeeRestController {
 
     private EmployeeService employeeService;

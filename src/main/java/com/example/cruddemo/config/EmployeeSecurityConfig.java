@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 
 import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.H2;
 
-@Configuration
+//@Configuration
 public class EmployeeSecurityConfig {
 
 
@@ -102,7 +102,6 @@ public class EmployeeSecurityConfig {
                 "select user_id, pw, active from members where user_id = ?");
         userDetailsManager.setAuthoritiesByUsernameQuery(
                 "select user_id, role from roles where user_id = ?");
-        System.out.println("userDetailsManager: " + userDetailsManager.getUsersByUsernameQuery());
         return userDetailsManager;
     }
 
