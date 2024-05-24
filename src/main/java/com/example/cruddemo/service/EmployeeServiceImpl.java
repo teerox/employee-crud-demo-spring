@@ -9,55 +9,61 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-//@Service
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     // old DAO
     private final EmployeeDAO employeeDAO;
 
-    private final EmployeeRepository employeeRepository;
+   // private final EmployeeRepository employeeRepository;
 
 
-    EmployeeServiceImpl(EmployeeDAO theEmployeeDAO, EmployeeRepository employeeRepository) {
+    EmployeeServiceImpl(EmployeeDAO theEmployeeDAO) {
         employeeDAO = theEmployeeDAO;
-        this.employeeRepository = employeeRepository;
     }
 
+//    EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+//        this.employeeRepository = employeeRepository;
+//    }
 
     @Override
     public List<Employee> findAll() {
-        return employeeRepository.findAll();
+        return employeeDAO.findAll();
     }
+
+//    @Override
+//    public Employee findById(int theId) {
+//        Optional<Employee> result = employeeDAO.findById(theId);
+//        Employee theEmployee = null;
+//
+//        if (result.isPresent()) {
+//            theEmployee = result.get();
+//        } else {
+//            // we didn't find the employee
+//            throw new RuntimeException("Did not find employee id - " + theId);
+//        }
+//        return theEmployee;
+//    }
 
     @Override
     public Employee findById(int theId) {
-        Optional<Employee> result = employeeRepository.findById(theId);
-        Employee theEmployee = null;
-
-        if (result.isPresent()) {
-            theEmployee = result.get();
-        } else {
-            // we didn't find the employee
-            throw new RuntimeException("Did not find employee id - " + theId);
-        }
-        return theEmployee;
+        return employeeDAO.findById(theId);
     }
-
     @Transactional
     @Override
     public Employee save(Employee theEmployee) {
-        return employeeRepository.save(theEmployee);
+        return employeeDAO.save(theEmployee);
     }
 
     @Transactional
     @Override
     public void deleteById(int theId) {
-        employeeRepository.deleteById(theId);
+        employeeDAO.deleteById(theId);
     }
 
     @Transactional
     @Override
     public void update(Employee theEmployee) {
-        employeeRepository.save(theEmployee);
+        employeeDAO.save(theEmployee);
     }
 }

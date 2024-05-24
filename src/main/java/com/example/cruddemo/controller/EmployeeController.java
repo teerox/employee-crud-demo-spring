@@ -3,6 +3,7 @@ package com.example.cruddemo.controller;
 import com.example.cruddemo.entity.Employee;
 import com.example.cruddemo.service.EmployeeService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@Controller
-//@RequestMapping("/employees")
+@Controller
+@RequestMapping("/employees")
 public class EmployeeController {
 
     private EmployeeService employeeService;
 
-    //@Autowired
+    @Autowired
     public EmployeeController(EmployeeService theEmployeeService) {
         employeeService = theEmployeeService;
     }

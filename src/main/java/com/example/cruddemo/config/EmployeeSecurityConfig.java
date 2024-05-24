@@ -4,19 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
+
 
 import javax.sql.DataSource;
 
@@ -49,43 +37,43 @@ public class EmployeeSecurityConfig {
 //    }
 
      //secure rest api
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers(HttpMethod.GET, "api/employee").hasRole("EMPLOYEE")
-                                .requestMatchers(HttpMethod.GET, "api/employee/**").hasRole("EMPLOYEE")
-                                .requestMatchers(HttpMethod.POST, "api/employee").hasRole("MANAGER")
-                                .requestMatchers(HttpMethod.PUT, "api/employee").hasRole("MANAGER")
-                                .requestMatchers(HttpMethod.DELETE, "api/employee").hasRole("ADMIN")
-                                .requestMatchers("employees/").hasRole("EMPLOYEE")
-                                .requestMatchers("employees/leaders/**").hasRole("MANAGER")
-                                .requestMatchers("employees/systems/**").hasRole("ADMIN")
-                                .anyRequest()
-                                .authenticated()
-                )
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling
-                                .accessDeniedPage("/employees/access-denied")
-                )
-                .formLogin(form ->
-                        form.loginPage("/login")
-                                .loginProcessingUrl("/authenticateTheUser")
-                                .defaultSuccessUrl("/", true)
-                                .failureUrl("/login?error=true")
-                                .permitAll()
-                )
-                .logout(LogoutConfigurer::permitAll);
-        // use basic authentication
-        //http.httpBasic(Customizer.withDefaults());
-
-
-        // disable csrf
-        // in general not required for stateless rest apis
-        http.csrf( csrf-> csrf.disable());
-        return http.build();
-    }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeHttpRequests(authorizeRequests ->
+//                        authorizeRequests
+//                                .requestMatchers(HttpMethod.GET, "api/employee").hasRole("EMPLOYEE")
+//                                .requestMatchers(HttpMethod.GET, "api/employee/**").hasRole("EMPLOYEE")
+//                                .requestMatchers(HttpMethod.POST, "api/employee").hasRole("MANAGER")
+//                                .requestMatchers(HttpMethod.PUT, "api/employee").hasRole("MANAGER")
+//                                .requestMatchers(HttpMethod.DELETE, "api/employee").hasRole("ADMIN")
+//                                .requestMatchers("employees/").hasRole("EMPLOYEE")
+//                                .requestMatchers("employees/leaders/**").hasRole("MANAGER")
+//                                .requestMatchers("employees/systems/**").hasRole("ADMIN")
+//                                .anyRequest()
+//                                .authenticated()
+//                )
+//                .exceptionHandling(exceptionHandling ->
+//                        exceptionHandling
+//                                .accessDeniedPage("/employees/access-denied")
+//                )
+//                .formLogin(form ->
+//                        form.loginPage("/login")
+//                                .loginProcessingUrl("/authenticateTheUser")
+//                                .defaultSuccessUrl("/", true)
+//                                .failureUrl("/login?error=true")
+//                                .permitAll()
+//                )
+//                .logout(LogoutConfigurer::permitAll);
+//        // use basic authentication
+//        //http.httpBasic(Customizer.withDefaults());
+//
+//
+//        // disable csrf
+//        // in general not required for stateless rest apis
+//        http.csrf( csrf-> csrf.disable());
+//        return http.build();
+//    }
 
 //   //add support for jbdc
 //    @Bean
@@ -95,15 +83,15 @@ public class EmployeeSecurityConfig {
 //    }
 
  //    for custom queries
-    @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource) {
-        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
-        userDetailsManager.setUsersByUsernameQuery(
-                "select user_id, pw, active from members where user_id = ?");
-        userDetailsManager.setAuthoritiesByUsernameQuery(
-                "select user_id, role from roles where user_id = ?");
-        return userDetailsManager;
-    }
+//    @Bean
+//    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+//        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+//        userDetailsManager.setUsersByUsernameQuery(
+//                "select user_id, pw, active from members where user_id = ?");
+//        userDetailsManager.setAuthoritiesByUsernameQuery(
+//                "select user_id, role from roles where user_id = ?");
+//        return userDetailsManager;
+//    }
 
 
     // NoOpPasswordEncoder is deprecated. This is just for testing purposes.

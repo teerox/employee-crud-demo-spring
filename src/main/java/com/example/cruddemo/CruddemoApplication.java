@@ -20,7 +20,7 @@ public class CruddemoApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(AppDAO appDAO) {
 		return args -> {
-			System.out.println("Hello Spring Boot");
+			//System.out.println("Hello Spring Boot");
 			//addMoreCourseForStudent(appDAO);
 			//createInstructorWithCourses(appDAO);
 			//retrieveStudentAndCourses(appDAO);
@@ -31,7 +31,7 @@ public class CruddemoApplication {
 			//updateInstructor(appDAO);
 			//findCoursesByInstructorId(appDAO);
 			//deleteCourse(appDAO);
-			deleteStudent(appDAO);
+			//deleteStudent(appDAO);
 		};
 	}
 
